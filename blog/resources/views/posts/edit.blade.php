@@ -6,6 +6,7 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
     </head>
+    <x-layout>
     <body>
         <h1>Blog Name</h1>
         <form action="/posts/{{ $post->id }}" method="POST">
@@ -27,4 +28,5 @@
             <a href="/posts/{{ $post->id }}">戻る</a>
         </div>
     </body>
+    </x-layout>
 </html>
