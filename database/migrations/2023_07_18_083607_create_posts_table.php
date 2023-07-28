@@ -16,9 +16,9 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
             $table->string('body', 200);
-            $table->string('image', 255);
+            $table->string('image_url');
             $table->point('point')->nullable();
-            $table->timestamps(0);
+            $table->timestamps();
             $table->softDeletes();
         });
     }
