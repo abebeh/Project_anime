@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('title', 200);
             $table->string('body', 200);
             $table->string('image_url');
             $table->point('point')->nullable();

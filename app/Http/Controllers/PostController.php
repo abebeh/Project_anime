@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest; 
 use App\Models\Post;
 use Cloudinary;
+use Illuminate\Support\Facades\Auth;
 /*
 @param Object Post
 @return Response post view
@@ -24,12 +25,12 @@ class PostController extends Controller
     }
     
     public function store(PostRequest $request, Post $post)
-    {
-        $image_url = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
-        dd($image_url);
-        
+    {   
         $input = $request['post'];
-        $input += ['user_id' => $request->user()->id]; 
+        $image_url = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
+        $input += ['image_url' => $image_url];
+        $input += ['user_id' => Auth::id()]; 
+        $input += ['anime_id' => 1 ];
         $post->fill($input)->save();
         return redirect('/posts/' . $post->id);
     }
