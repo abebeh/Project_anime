@@ -8,23 +8,25 @@
     </head>
     <x-app-layout>
     <body>
-        <h1>Blog Name</h1>
-        <a href="/posts/create">create</a>
+        <h1>投稿一覧</h1>
+        <a href="/posts/create">投稿作成</a>
         <div class='posts'>
             @foreach ($posts as $post)
 
                 <div class='posts'>
                     
+                    <small>ユーザー名：{{ Auth::user()->name }}</small>
+                    
                     <h2 class='title'>
-                        <a href="/posts/{{ $post->id }}">{{ $post->title }}</a>
+                        <a href="/posts/{{ $post->id }}">アニメ名：{{ $post->title }}</a>
                     </h2>
-                    <small>{{ $post->user->name }}</small>
-                    <p class='body'>{{ $post->body }}</p>
+                    
+                    <p class='body'>内容：{{ $post->body }}</p>
                     
                     <form action="/posts/{{ $post->id }}" id="form_{{$post->id}}" method="post">
                         @csrf
                         @method('DELETE')
-                        <button type="button" onclick="deletePost({{ $post->id }})">delete</button>
+                        <button type="button" onclick="deletePost({{ $post->id }})">投稿を削除</button>
                     </form>
 
                 </div>
@@ -36,7 +38,7 @@
         <div class='paginate'>
             {{ $posts->links()}}
         </div>
-        {{ Auth::user()->name }}
+        
         <div id="map" style="height:500px">
 	   </div>
 	   <script>

@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Posts</title>
+        <title>投稿内容</title>
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
     </head>
@@ -15,7 +15,7 @@
         </h1>
         <div class='context'>
         <div class="content__post">
-                    <h3>本文</h3>
+                    <h3>内容</h3>
                     <p class='body'>{{ $post->body }}</p>    
         </div>
         </div>
@@ -39,7 +39,6 @@
                 
                 // 東京タワーの緯度、経度を変数に入れる
                 let japan_center = {lat: 35.59, lng: 138.27};
-                let test_markers = [{lat: 35.6585769, lng: 139.7654506}]
                 // オプションの設定
                 opt = {
                     // 地図の縮尺を指定
@@ -51,7 +50,7 @@
 
                 // 地図のインスタンスを作成（第一引数にはマップを描画する領域、第二引数にはオプションを指定）
                 mapObj = new google.maps.Map(map, opt);
-                console.log(markers,test_markers)
+                console.log(markers)
                 for (let i = 0;i<markers.length;i++){
                     console.log(i)
                     marker = new google.maps.Marker({
