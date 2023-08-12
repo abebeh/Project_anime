@@ -11,9 +11,13 @@
         <h1>Blog Name</h1>
         <form action="/posts" method="POST" enctype="multipart/form-data">
             @csrf
+            <div>
+                緯度：<input type="numbers" name="lat">
+                経度：<input type="numbers" name="lng">
+            </div>
             <div class="title">
                 <h2>Title</h2>
-                <input type="text" name=post[title] placeholder="タイトル" value={{old('post.title')}}>
+                <input type="text" name="post[title]" placeholder="タイトル">
                 <p class='title__error' style="color:red">{{ $errors->first('post.title') }}</p>
             </div>
             <div class="body">
@@ -24,8 +28,12 @@
             <div class="image">
                 <input type="file" name="image">
             </div>
-            <input type="submit" value="store">
+                <input type="submit" value="store">
+            
         </form>
+        <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+        
+        
         <div class="footer">
             <a href="/">戻る</a>
         </div>

@@ -13,14 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('posts', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('title', 200);
-            $table->string('body', 200);
-            $table->string('image_url');
-            $table->point('point');
+        Schema::create('maps', function (Blueprint $table) {
+            $table->id();
             $table->timestamps();
-            $table->softDeletes();
+            $table->string('name')->unique();
+            $table->point('location')->nullable();
+            $table->polygon('area')->nullable();
         });
     }
 
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('posts');
+        Schema::dropIfExists('maps');
     }
 };
