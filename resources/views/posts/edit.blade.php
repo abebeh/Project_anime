@@ -8,19 +8,19 @@
     </head>
     <x-app-layout>
     <body>
-        <h1>Blog Name</h1>
+        <h1>投稿名</h1>
         <form action="/posts/{{ $post->id }}" method="POST">
             @csrf
-            <input type="numbers" name=lat placeholder="緯度">
-            <input type="numbers" name=lng placeholder="経度">
+                緯度：<input type="numbers" name="lat">
+                経度：<input type="numbers" name="lng">
             @method('PUT')
             <div class="title">
-                <h2>Title</h2>
+                <h2>アニメ名</h2>
                 <input type="text" name=post[title] placeholder="タイトル" value={{ $post->title }}>
                 <p class='title__error' style="color:red">{{ $errors->first('post.title') }}</p>
             </div>
             <div class="body">
-                <h2>Body</h2>
+                <h2>内容</h2>
                 <textarea name="post[body]" placeholder="今日も1日お疲れ様でした。">{{ $post->body }}</textarea>
                 <p class='body__error' style="color:red">{{ $errors->first('post.body') }}</p>
             </div>
@@ -32,9 +32,13 @@
 	       function initMap() {
                 map = document.getElementById("map");
                 
-                // 東京タワーの緯度、経度を変数に入れる
+                
+                const post = @json($post);
+                
+                console.log(post.point.coordinates);
+                
+                let markers = [{lat: post.point.coordinates[1],lng: post.point.coordinates[0]}]
                 let tokyoTower = {lat: 35.6585769, lng: 135.7454506};
-                let markers = [{lat: 35.6585769, lng: 139.7454506},{lat: 35.6685769, lng: 139.7454506},{lat: 35.6585769, lng: 139.7654506}]
                 // オプションの設定
                 opt = {
                     // 地図の縮尺を指定

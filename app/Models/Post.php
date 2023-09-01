@@ -18,6 +18,11 @@ class Post extends Model
     return $this->belongsTo(User::class);
     }
     
+    public function anime()
+    {
+    return $this->belongsTo(Anime::class);
+    }
+    
     protected $fillable = [
         'title',
         'body',
@@ -30,11 +35,10 @@ class Post extends Model
         'point' => Point::class,
     ];
     
-       function getPaginateByLimit(int $limit_count = 5)
+    function getPaginateByLimit(int $limit_count = 5)
     {
-        return $this::with('user')->orderBy('updated_at', 'DESC')->paginate($limit_count);
+        return $this::with('user','anime')->orderBy('updated_at', 'DESC')->paginate($limit_count);
     }
-    
     
 
 }
