@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('animes', function (Blueprint $table) {
             $table->id();
-            $table->longtext('title');
-            $table->longtext('url');
+            $table->longtext('value');
+            #$table->longtext('url');
         });
     }
 

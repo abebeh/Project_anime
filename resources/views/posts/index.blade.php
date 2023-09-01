@@ -15,12 +15,15 @@
 
                 <div class='posts'>
                     
-                    <small>ユーザー名：{{ Auth::user()->name }}</small>
+                    <small>ユーザー名：{{ $post->user->name }}</small>
                     
                     <h2 class='title'>
-                        <a href="/posts/{{ $post->id }}">アニメ名：{{ $post->title }}</a>
+                        <a href="/posts/{{ $post->id }}">アニメ名：{{ $post->anime->value }}</a>
                     </h2>
                     
+                    <h2 class='title'>
+                        <a href="/posts/{{ $post->id }}">タイトル：{{ $post->title }}</a>
+                    </h2>
                     <p class='body'>内容：{{ $post->body }}</p>
                     
                     <form action="/posts/{{ $post->id }}" id="form_{{$post->id}}" method="post">
@@ -38,9 +41,10 @@
         <div class='paginate'>
             {{ $posts->links()}}
         </div>
-        
-        <div id="map" style="height:500px">
-	   </div>
+        <div class="fixed w-2/4 h-full right-0 top-16 z-0">
+        <div id="map" style="height:100%">
+	    </div>
+	    </div>
 	   <script>
 	       function initMap() {
                 map = document.getElementById("map");
@@ -49,14 +53,17 @@
                 let markers = []
                 for (let i = 0 ;i < posts.data.length ; i++ ){
                     console.log(i)
-                    markers.push({lat: posts.data[i].point.coordinates[1],lng: posts.data[i].point.coordinates[0]})
+                    markers.push({position: {lat: posts.data[i].point.coordinates[1],lng: posts.data[i].point.coordinates[0]},
+                        title: posts.data[i].title,
+                        body: posts.data[i].body,
+                        image_url: posts.data[i].image_url,
+                        id: posts.data[i].id})
                 }
                 console.log(markers,'test')
                 //let markers = [{lat: post.point.coordinates[0],lng: post.point.coordinates[1]}]
                 
                 // 東京タワーの緯度、経度を変数に入れる
                 let tokyoTower = {lat: 35.6585769, lng: 139.7454506};
-                //let markers = [{lat: 35.6585769, lng: 139.7454506},{lat: 35.6685769, lng: 139.7454506},{lat: 35.6585769, lng: 139.7654506}]
                 // オプションの設定
                 opt = {
                     // 地図の縮尺を指定
@@ -70,19 +77,42 @@
                 mapObj = new google.maps.Map(map, opt);
                 console.log(markers)
                 for (let i = 0;i<markers.length;i++){
+                    if (posts){
+                       let infoWindow = new google.maps.InfoWindow({
+                        content: `<div class="custom-info">
+                        <div class="custom-info-item title">
+                            ${markers[i].title}
+                        </div>
+                        <div class="custom-info-item body">
+                           ${markers[i].body}
+                        </div>
+                        </div>
+                        <div class="custom-info-item image">
+                            <a href="/posts/${markers[i].id}">
+                                <img src=${markers[i].image_url}>
+                            </a>
+                        </div>`,
+                    })
+                    
                     console.log(i)
-                    marker = new google.maps.Marker({
+                    let posts = new google.maps.Marker({
                     // ピンを差す位置を東京タワーに設定
-                        position: markers[i],
+                        position: markers[i].position,
     
                         // ピンを差すマップを指定
                         map: mapObj,
-    
-                        // ホバーしたときに「tokyotower」と表示されるように指定
-    
-                        title: '番目',
-                    });
-                }
+                        
+                        
+                        pixelOffset: new google.maps.Size(0, -20)
+                    })
+                    posts.addListener('click', () => {
+                        infoWindow.open(map,posts);
+                    });    
+                    }
+                    
+
+                        
+                };
                 
             }
 	   </script>

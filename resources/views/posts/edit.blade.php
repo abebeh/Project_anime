@@ -11,8 +11,8 @@
         <h1>投稿名</h1>
         <form action="/posts/{{ $post->id }}" method="POST">
             @csrf
-            <input type="numbers" name=lat placeholder="緯度">
-            <input type="numbers" name=lng placeholder="経度">
+                緯度：<input type="numbers" name="lat">
+                経度：<input type="numbers" name="lng">
             @method('PUT')
             <div class="title">
                 <h2>アニメ名</h2>
